@@ -135,7 +135,7 @@ const Welcome = ( navigation ) => {
                         fontSize: 16,
                         fontWeight: "bold",
                         marginLeft: 4
-                    }}>Register Now</Text>
+                    }}> Now</Text>
                     </Pressable>
 
                 </View>
