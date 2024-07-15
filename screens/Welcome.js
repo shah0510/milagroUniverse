@@ -1,11 +1,12 @@
 import { View, Text, Pressable, SafeAreaView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import COLORS from '../constants/colors';
 import { Image } from 'react-native';
 import Button from '../components/Button';
 import { TextInput } from 'react-native';
 import { Ionicons } from "@expo/vector-icons"
-const Welcome = ( navigation ) => {
+const Welcome = ( {navigation} ) => {
+    const [isPasswordShown, setIsPasswordShown] = useState(false);
   return (
         <View style={{flex:1}}>
             <View>
@@ -93,22 +94,42 @@ const Welcome = ( navigation ) => {
                         <TextInput
                         placeholder='Password'
                         placeholderTextColor={COLORS.black}
-                        secureTextEntry='password'
+                        secureTextEntry={isPasswordShown}
                         style={{
                             width: "100%"
                         }}
                         />
 
                         <TouchableOpacity
+                          onPress={()=>setIsPasswordShown(!isPasswordShown)}
                           style={{
                             position: 'absolute',
                             right: 12
                           }}
                         >
-                            <Ionicons name="eye-off" size={24} color={COLORS.black}/>
+
+                          {
+                            isPasswordShown == true ? (
+                                <Ionicons name="eye-off" size={24} color={COLORS.black}/>
+                            ) : (
+                                <Ionicons name="eye" size={24} color={COLORS.black}/>                        
+                            )
+                          }
+
+                            
                         </TouchableOpacity>
                         
                     </View>
+                    <Pressable
+                     onPress={()=>navigation.navigate("ForgotPass")}
+                    >
+                        <Text  style={{
+                        marginTop: 7,
+                        fontSize: 15,
+                        fontWeight: "bold",
+                        marginLeft: 4
+                    }}>Forgot Password</Text>
+                    </Pressable>
 
                 </View>
 
@@ -129,7 +150,7 @@ const Welcome = ( navigation ) => {
                         fontSize: 16,
                     }}>Not a Member?</Text>
                     <Pressable
-                     onPress={()=>navigation.navigate("SignUp")}
+                     onPress={()=>navigation.navigate("Signup")}
                     >
                         <Text  style={{
                         fontSize: 16,
@@ -144,4 +165,4 @@ const Welcome = ( navigation ) => {
   )
 }
 
-export default Welcome
+export default Welcome;
