@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { TextInput, Button, Checkbox, Text, DefaultTheme, Provider as PaperProvider, IconButton } from 'react-native-paper';
-import PasswordChangeSuccessModal from './modalpassword';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { TextInput, Text, Button, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import RNPickerSelect from 'react-native-picker-select';
+import axios from 'axios';
 
 const theme = {
   ...DefaultTheme,
@@ -11,194 +12,239 @@ const theme = {
   },
 };
 
-const ChangePasswordScreen = () => {
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordMatchError, setPasswordMatchError] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+const CompanyDeets = () => {
+  const [selectedCountry, setSelectedCountry] = useState('India');
+  const [countryList, setCountryList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    companyName: '',
+    companyGST: '',
+    companyPAN: '',
+    streetAddress: '',
+    city: '',
+    stateProvince: '',
+    zipPostal: '',
+  });
 
-  const handleCancelPress = () => {
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get('https://restcountries.com/v3.1/all');
+        const countries = response.data.map((country) => ({
+          label: country.name.common,
+          value: country.name.common,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+        setCountryList(countries);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching country list:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  const handleInputChange = (name, value) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = () => {
+    console.log('Form data:', formData);
+
+    const data = {
+      ...formData,
+      country: selectedCountry,
+    };
+
+    axios.post('url-daal-yaha', data)
+      .then(response => {
+        console.log('Response:', response.data);
+        // Handle the response as needed
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  };
+
+  const handleCancel = () => {
     console.log('Cancel button pressed!');
-    // Add functionality here
   };
 
-  const handleSubmitPress = () => {
-    console.log('Submit button pressed!');
-    // Add functionality here
-    if (newPassword !== confirmPassword) {
-      setPasswordMatchError(true);
+  if (loading) {
+    return (
+      <PaperProvider theme={theme}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#0a84ff" />
+        </View>
+      </PaperProvider>
+    );
+  }
 
-    } else {
-      setPasswordMatchError(false);
-      setModalVisible(true);
-    }
-  };
-
-  const toggleShowNewPassword = () => {
-    setShowNewPassword(!showNewPassword);
-  };
-
-  const toggleShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
-  const handleModalDismiss = () => {
-    setModalVisible(false);
-  };
- 
   return (
     <PaperProvider theme={theme}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.view}>
-          <Text style={styles.heading}>Change Your Password</Text>
+          <Text style={styles.heading}>Company Details</Text>
+          <Text>Use a permanent address where you can receive product.</Text>
         </View>
 
         <View style={styles.form}>
-          <Text style={styles.textinput}>New Password</Text>
-          <View style={styles.passwordContainer}>
-            <TextInput
-              secureTextEntry={!showNewPassword}
-              mode="flat"
-              style={styles.input}
-              value={newPassword}
-              onChangeText={setNewPassword}
-            />
-            <IconButton
-              icon={showNewPassword ? 'eye' : 'eye-off'}
-              onPress={toggleShowNewPassword}
-              style={styles.iconButton}
+          <Text style={styles.textinput}>Company Name</Text>
+          <TextInput
+            mode="outlined"
+            style={styles.input}
+            value={formData.companyName}
+            onChangeText={(value) => handleInputChange('companyName', value)}
+          />
+
+          <Text style={styles.textinput}>Company GST Number</Text>
+          <TextInput
+            mode="outlined"
+            style={styles.input}
+            value={formData.companyGST}
+            onChangeText={(value) => handleInputChange('companyGST', value)}
+          />
+
+          <Text style={styles.textinput}>Company PAN Number</Text>
+          <TextInput
+            mode="outlined"
+            style={styles.input}
+            value={formData.companyPAN}
+            onChangeText={(value) => handleInputChange('companyPAN', value)}
+          />
+
+          <Text style={styles.textinput}>Country / Region</Text>
+          <View style={styles.pickerContainer}>
+            <RNPickerSelect
+              value={selectedCountry}
+              onValueChange={(value) => setSelectedCountry(value)}
+              items={countryList}
+              style={{
+                inputAndroid: {
+                  color: 'black',
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  borderRadius: 5,
+                },
+                inputIOS: {
+                    color: 'black',
+                    padding: 10,
+                    borderWidth: 1,
+                    borderColor: 'gray',
+                    borderRadius: 5,
+                },
+              }}
             />
           </View>
 
-          <Text style={styles.textinput}>Re-type Password</Text>
-          <View style={styles.passwordContainer}>
-            <TextInput
-              secureTextEntry={!showConfirmPassword}
-              mode="flat"
-              style={styles.input}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
-            <IconButton
-              icon={showConfirmPassword ? 'eye' : 'eye-off'}
-              onPress={toggleShowConfirmPassword}
-              style={styles.iconButton}
-            />
-          </View>
+          <Text style={styles.textinput}>Street Address</Text>
+          <TextInput
+            mode="outlined"
+            style={styles.input}
+            value={formData.streetAddress}
+            onChangeText={(value) => handleInputChange('streetAddress', value)}
+          />
 
-          {passwordMatchError && (
-            <Text style={styles.errorText}>Passwords do not match. Please try again.</Text>
-          )}
+          <Text style={styles.textinput}>City</Text>
+          <TextInput
+            mode="outlined"
+            style={styles.input}
+            value={formData.city}
+            onChangeText={(value) => handleInputChange('city', value)}
+          />
 
-          <View style={styles.checkboxcontainerLink}>
-            <Checkbox
-              status={checked ? 'checked' : 'unchecked'}
-              onPress={() => setChecked(!checked)}
-            />
-            <Text style={styles.tnc}>
-              I’ve read and agree with the <Text style={styles.link}>Terms and Conditions</Text> and the{' '}
-              <Text style={styles.link}>Privacy Policy</Text>
-            </Text>
-          </View>
+          <Text style={styles.textinput}>State / Province</Text>
+          <TextInput
+            mode="outlined"
+            style={styles.input}
+            value={formData.stateProvince}
+            onChangeText={(value) => handleInputChange('stateProvince', value)}
+          />
 
-          <View style={styles.buttonContainer}>
-            <Button mode="text" onPress={handleCancelPress} style={styles.cancelButton}>
-              Cancel
-            </Button>
-            <Button mode="contained" onPress={handleSubmitPress} style={styles.submitButton} disabled={!checked} >
-              Submit
-            </Button>
-          </View>
+          <Text style={styles.textinput}>ZIP / Postal</Text>
+          <TextInput
+            mode="outlined"
+            style={styles.input}
+            value={formData.zipPostal}
+            onChangeText={(value) => handleInputChange('zipPostal', value)}
+          />
+
+            <View style={styles.buttonContainer}>
+                <Button mode="text" onPress={handleCancel} style={styles.cancelButton}>
+                Cancel
+                </Button>
+                <Button mode="contained" onPress={handleSubmit} style={styles.submitButton} >
+                Next
+                </Button>
+            </View>
+
+
         </View>
-      
-        <PasswordChangeSuccessModal visible={modalVisible} onDismiss={handleModalDismiss} />
-
       </ScrollView>
     </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+container: {
     flexGrow: 1,
     padding: 20,
     backgroundColor: '#fff',
     paddingTop: 65,
-  },
-  view: {
+},
+view: {
     marginTop: 40,
-  },
-  heading: {
+},
+heading: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,
-  },
-  form: {
+},
+form: {
     marginTop: 20,
-  },
-  input: {
-    marginTop: 15,
+},
+input: {
     marginBottom: 15,
-    height: 43,
-    flex: 1,
-    backgroundColor: 'white',
-    marginLeft: 2,
-
-  },
-  textinput: {
+    height: 50,
+},
+textinput: {
     marginBottom: 4,
     fontWeight: 'bold',
-  },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+},
+pickerContainer: {
+    flexDirection: 'column',
+    height: 50,
     marginBottom: 15,
-    height: 45,
-    borderWidth: 0.6,
-    borderRadius: 4,
-  },
-  checkboxcontainerLink: {
-    flexDirection: 'row',
+    borderWidth: 0.8,
+    borderRadius: 5,
+},
+loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
-    marginRight: 40,
-  },
-  link: {
-    color: '#0a84ff',
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
+},
+buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  cancelButton: {
+},
+cancelButton: {
     flex: 1,
     marginRight: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#ddd',
-  },
-  submitButton: {
+},
+submitButton: {
     flex: 1,
     borderRadius: 5,
-  },
-  tnc: {
-    paddingTop: 12,
-    paddingBottom: 12,
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-  },
-  iconButton: {
-    height: 30,
-    width: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    marginTop: 20,
+}
 });
 
-export default ChangePasswordScreen;
+export default CompanyDeets;
