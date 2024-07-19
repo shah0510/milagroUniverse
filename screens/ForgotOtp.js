@@ -52,7 +52,7 @@ const ForgotOtp = ( {navigation} ) => {
         <TouchableOpacity style={styles.backButton} onPress={()=>navigation.navigate("Welcome")}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.nextButton} onPress={()=>navigation.navigate("CompanyDeets")}>
+        <TouchableOpacity style={styles.nextButton} onPress={()=>navigation.navigate("Changepassword")}>
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>
       </View>

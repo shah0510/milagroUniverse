@@ -198,9 +198,7 @@ container: {
     backgroundColor: '#fff',
     paddingTop: 65,
 },
-view: {
-    marginTop: 40,
-},
+
 heading: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -221,7 +219,6 @@ pickerContainer: {
     flexDirection: 'column',
     height: 50,
     marginBottom: 15,
-    borderWidth: 0.8,
     borderRadius: 5,
 },
 loadingContainer: {
@@ -229,10 +226,7 @@ loadingContainer: {
     justifyContent: 'center',
     alignItems: 'center',
 },
-buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-},
+
 cancelButton: {
     flex: 1,
     marginRight: 10,

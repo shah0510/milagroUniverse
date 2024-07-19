@@ -52,7 +52,7 @@ const CodeScreen = ( {navigation} ) => {
         <TouchableOpacity style={styles.backButton} onPress={()=>navigation.navigate("Welcome")}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.nextButton} onPress={()=>navigation.navigate("ChangePasswordScreen")}>
+        <TouchableOpacity style={styles.nextButton} onPress={()=>navigation.navigate("CompanyDeets")}>
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>
       </View>

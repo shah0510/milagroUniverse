@@ -141,13 +141,10 @@ const Signup = ( {navigation} ) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flexGrow: 0.3,
     justifyContent: 'center',
     padding: 20,
     backgroundColor: '#fff',
-  },
-  view: {
-    marginTop: 40,
   },
   form: {
     marginTop: 20,
@@ -176,6 +173,7 @@ const styles = StyleSheet.create({
     height: 20,
   },
   checkboxContainer: {
+    borderColor: '#0a84ff',
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 15,
