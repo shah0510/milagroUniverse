@@ -5,7 +5,13 @@ import CodeScreen from "./CodeScreen";
 import CompanyDeets from "./Companydeets";
 import ForgotPass from "./ForgotPass";
 import ForgotOtp from "./ForgotOtp";
-import ChangePasswordScreen from "./Changepassword";
+import Changepassword from "./Changepassword";
+import Home from "./Home";
+import Support from "./Support";
+import ProductDetailsScreen from "./ProductDetailsScreen";
+import  CartScreen  from "./CartScreen";
+import Search from "./Search";
+import Category from "./Category";
 
 export {
     Login,
@@ -15,5 +21,11 @@ export {
     CompanyDeets,
     ForgotPass,
     ForgotOtp,
-    ChangePasswordScreen
+    Changepassword,
+    Home,
+    Support,
+    ProductDetailsScreen,
+    CartScreen,
+    Search,
+    Category,
 }

@@ -11,7 +11,7 @@ const theme = {
   },
 };
 
-const ChangePasswordScreen = () => {
+const Changepassword = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatchError, setPasswordMatchError] = useState(false);
@@ -201,4 +201,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChangePasswordScreen;
+export default Changepassword;

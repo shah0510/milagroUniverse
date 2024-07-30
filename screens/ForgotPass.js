@@ -40,7 +40,7 @@ const ForgotPass = ( {navigation} ) => {
           value={email}
           onChangeText={setEmail}
         />
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("CodeScreen")}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("ForgotOtp")}>
           <Text style={styles.buttonText}>Send Request</Text>
         </TouchableOpacity>
       </View>

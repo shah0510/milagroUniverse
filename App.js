@@ -1,13 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login, Signup, Welcome, CodeScreen, CompanyDeets, ForgotPass, ForgotOtp, ChangePasswordScreen } from "./screens";
+import { Login, Signup, Welcome, CodeScreen, CompanyDeets, ForgotPass, ForgotOtp, Changepassword, Home, Support, ProductDetailsScreen, CartScreen, Search, Category } from "./screens";
+import { CartProvider } from './screens/CartContext';
+
 
 const stack = createNativeStackNavigator()
 
+
 export default function App() {
   return(
-    <NavigationContainer>
+    <CartProvider>
+    <NavigationContainer independent={true}>
       <stack.Navigator
         initialRouteName='Welcome'
       >
@@ -61,13 +65,45 @@ export default function App() {
           }}
         />
          <stack.Screen
-          name="ChangePasswordScreen"
-          component={ChangePasswordScreen}
+          name="Changepassword"
+          component={Changepassword}
           options={{
             headerShown:false
           }}
         />
+        <stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown:true
+          }}
+        />
+        <stack.Screen
+          name="ProductDetails"
+          component={ProductDetailsScreen}
+          options={{
+          }}
+        />
+        <stack.Screen
+          name="Cart"
+          component={CartScreen}
+          options={{
+          }}
+        />
+        <stack.Screen
+          name="Search"
+          component={Search}
+          options={{
+          }}
+        />
+        <stack.Screen
+          name="Category"
+          component={Category}
+          options={{
+          }}
+        />
       </stack.Navigator>
     </NavigationContainer>
+    </CartProvider>
   );
 }
