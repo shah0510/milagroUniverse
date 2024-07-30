@@ -5,7 +5,9 @@ import { Image } from 'react-native';
 import Button from '../components/Button';
 import { TextInput } from 'react-native';
 import { Ionicons } from "@expo/vector-icons"
-const Welcome = ( {navigation} ) => {
+import { useNavigation } from '@react-navigation/native';
+const Welcome = ( ) => {
+    const navigation = useNavigation();
     const [isPasswordShown, setIsPasswordShown] = useState(false);
   return (
         <View style={{flex:1}}>
@@ -135,7 +137,7 @@ const Welcome = ( {navigation} ) => {
 
                 <Button
                   title="Login"
-                  onPress={()=>navigation.navigate("Login")}
+                  onPress={()=>navigation.navigate("Home")}
                   style={{
                     marginTop:22,
                     width: "100%",
