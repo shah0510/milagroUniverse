@@ -72,8 +72,8 @@ const CartScreen = ({ navigation }) => {
               <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Text style={styles.buttonText}>Back</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.sendRequestButton}>
-                <Text style={styles.buttonText}>Send Request</Text>
+              <TouchableOpacity style={styles.sendRequestButton} onPress={()=>navigation.navigate("Shippingdeets")} >
+                <Text style={styles.buttonText} >Send Request</Text>
               </TouchableOpacity>
             </View>
           </View>
