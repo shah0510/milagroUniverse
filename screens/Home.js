@@ -6,7 +6,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Support from './Support';
-import Category from './Category';
+import Categories from './Categories';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +32,7 @@ const Home = () => {
                 return <Entypo name={"home"} size={25} color={color}/>;
             },
         }} />
-        <Tab.Screen name="Categories" component={Category} options={{
+        <Tab.Screen name="Categories" component={Categories} options={{
             tabBarIcon:({color})=>{
                 return <MaterialIcons name={"category"} size={25} color={color}/>;
             },

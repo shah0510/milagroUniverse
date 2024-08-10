@@ -11,7 +11,8 @@ import Support from "./Support";
 import ProductDetailsScreen from "./ProductDetailsScreen";
 import  CartScreen  from "./CartScreen";
 import Search from "./Search";
-import Category from "./Category";
+import Shippingdeets from "./Shippingdeets";
+import Categories from "./Categories"
 
 export {
     Login,
@@ -27,5 +28,6 @@ export {
     ProductDetailsScreen,
     CartScreen,
     Search,
-    Category,
+    Shippingdeets,
+    Categories,
 }

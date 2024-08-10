@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login, Signup, Welcome, CodeScreen, CompanyDeets, ForgotPass, ForgotOtp, Changepassword, Home, Support, ProductDetailsScreen, CartScreen, Search, Category } from "./screens";
+import { Login, Signup, Welcome, CodeScreen, CompanyDeets, ForgotPass, ForgotOtp, Changepassword, Home, Support, ProductDetailsScreen, CartScreen, Search, Shippingdeets, Categories } from "./screens";
 import { CartProvider } from './screens/CartContext';
 
 
@@ -96,9 +96,15 @@ export default function App() {
           options={{
           }}
         />
-        <stack.Screen
-          name="Category"
-          component={Category}
+         <stack.Screen
+          name="Shippingdeets"
+          component={Shippingdeets}
+          options={{
+          }}
+        />
+         <stack.Screen
+          name="Categories"
+          component={Categories}
           options={{
           }}
         />
